@@ -198,10 +198,8 @@ int main(int argc, char **argv) {
     }
 
     /* Call image processor */
-    Eraser *eraser = NULL;
-    eraser = new Eraser(&img, atoi(argv[5]), atoi(argv[3]), atoi(argv[4]), atof(argv[6]));
-    eraser->run();
-    delete eraser;
+    Eraser eraser(&img, atoi(argv[5]), atoi(argv[3]), atoi(argv[4]), atof(argv[6]));
+    eraser.run();
 
     /* Output raw image from object */
     buff = img.output();
