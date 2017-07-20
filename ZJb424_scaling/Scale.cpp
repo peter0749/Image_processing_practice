@@ -24,10 +24,13 @@ namespace ImageProcess
         PixDouble upperLeft(this->sdata->getPixel(left, up));
 
         PixDouble upperRight = (right>=this->sdata->img_W)?upperLeft:PixDouble(this->sdata->getPixel(right,up));
-        PixDouble upperMid   = upperLeft*dr + upperRight*dl;
+        PixDouble upperMid   = upperLeft*dr + upperRight*dl; // interpolation on upper pixels
 
-        PixDouble downLeft = (down>=this->sdata->img_H)?upperLeft:PixDouble(this->sdata->getPixel(left,down));
-        PixDouble downRight = (down>=this->sdata->img_H || right>=this->sdata->img_W)?downLeft:PixDouble(this->sdata->getPixel(right, down));
+        if (down>=this->sdata->img_H) return Pix(upperMid);  // no lower pixels
+
+        /* Binary Interpolation (lower pixels)*/
+        PixDouble downLeft(this->sdata->getPixel(left,down));
+        PixDouble downRight = (right>=this->sdata->img_W)?downLeft:PixDouble(this->sdata->getPixel(right, down));
         PixDouble downMid = downLeft*dr + downRight*dl;
 
         PixDouble Mid = downMid*du + upperMid*dd; 
