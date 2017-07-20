@@ -42,5 +42,13 @@ namespace ImageProcess
             }
         return out;
     }
+    inline void Image::setPixel(const int x, const int y, const Pix &pix) {
+        if(x<0||y<0||x>=img_W||y>=img_H) throw std::runtime_error("setPixel out of range");
+        this->data[y*img_W+x] = pix;
+    }
+    inline const Pix Image::getPixel(const int x, const int y) {
+        if(x<0||y<0||x>=img_W||y>=img_H) throw std::runtime_error("getPixel out of range");
+        return this->data[y*img_W+x];
+    }
 };
 #endif

@@ -23,6 +23,8 @@ namespace ImageProcess
         Image(const size_t W, const size_t H, const uint8_t *img);
         Image(const size_t W, const size_t H, Pix *input_Data);
         Image(const Image &copy);
+        inline void setPixel(const int x, const int y, const Pix &pix);
+        inline const Pix getPixel(const int x, const int y);
         uint8_t* output(void); //dynamic alloc
         ~Image() { delete[] data; }
     };
