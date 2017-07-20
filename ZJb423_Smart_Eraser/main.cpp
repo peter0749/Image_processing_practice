@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "utils.h"
 #include "Eraser.h"
 #include <iostream>
 #include <cstring>
