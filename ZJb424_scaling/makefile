@@ -1,10 +1,10 @@
 IMAGE_PATH=../Image
 FLAG=-g
-all: main Scale
-Scale: Scale.cpp Pix.o PixDouble.o Image.o utils.o utils.h
-	g++ Scale.cpp utils.o Image.o Pix.o PixDouble.o -o Scale ${FLAG}
-main: main.cpp Pix.o PixDouble.o Image.o utils.o utils.h
-	g++ main.cpp utils.o Image.o Pix.o PixDouble.o -o main ${FLAG}
+all: main
+main: main.cpp Pix.o PixDouble.o Image.o utils.o Scale.o Scale.h utils.h
+	g++ main.cpp utils.o Image.o Pix.o PixDouble.o Scale.o -o main ${FLAG}
+Scale.o: Scale.cpp Scale.h
+	g++ -c Scale.cpp -o Scale.o ${FLAG}
 Image.o: ${IMAGE_PATH}/Image.cpp ${IMAGE_PATH}/Image.h 
 	g++ -c ${IMAGE_PATH}/Image.cpp -o Image.o ${FLAG}
 Pix.o: ${IMAGE_PATH}/Pix.h ${IMAGE_PATH}/Pix.cpp
