@@ -25,7 +25,7 @@ namespace ImageProcess
         using std::memcpy;
         memcpy(this->data, copy.data, img_H*img_W*sizeof(this->data[0]));
     }
-    uint8_t* Image::output(void) { //dynamic alloc
+    uint8_t* Image::output(void) const { //dynamic alloc
         uint8_t *out = NULL;
         out = new uint8_t[img_W*img_H*4];
         for (int i=0; i<img_H; ++i) 
@@ -37,11 +37,11 @@ namespace ImageProcess
             }
         return out;
     }
-    inline void Image::setPixel(const int x, const int y, const Pix &pix) {
+    void Image::setPixel(const int x, const int y, const Pix &pix) {
         if(x<0||y<0||x>=img_W||y>=img_H) throw std::runtime_error("setPixel out of range");
         this->data[y*img_W+x] = pix;
     }
-    inline const Pix Image::getPixel(const int x, const int y) {
+    const Pix Image::getPixel(const int x, const int y) const {
         if(x<0||y<0||x>=img_W||y>=img_H) throw std::runtime_error("getPixel out of range");
         return this->data[y*img_W+x];
     }
