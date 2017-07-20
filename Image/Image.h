@@ -18,10 +18,10 @@ namespace ImageProcess
 
     struct Image {
         size_t img_H, img_W;
-        Pix *data;
+        Pix *const data; // for security, address of data is assigned if and only if the object is being created
         Image(const size_t W, const size_t H);
         Image(const size_t W, const size_t H, const uint8_t *img);
-        Image(const size_t W, const size_t H, Pix *input_Data);
+        Image(const size_t W, const size_t H, const Pix *input_Data);
         Image(const Image &copy);
         inline void setPixel(const int x, const int y, const Pix &pix);
         inline const Pix getPixel(const int x, const int y);

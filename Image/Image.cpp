@@ -5,11 +5,8 @@
 namespace ImageProcess 
 {
 
-    Image::Image(const size_t W, const size_t H): img_H(H), img_W(W) {
-        this->data = new Pix[img_H*img_W];
-    }
-    Image::Image(const size_t W, const size_t H, const uint8_t *img): img_H(H), img_W(W) {
-        this->data = new Pix[img_H*img_W];
+    Image::Image(const size_t W, const size_t H): img_H(H), img_W(W), data(new Pix[H*W]) { }
+    Image::Image(const size_t W, const size_t H, const uint8_t *img): img_H(H), img_W(W), data(new Pix[H*W]) {
         for (int i=0; i<H; ++i) {
             for (int j=0; j<W; ++j) {
                 this->data[i*W + j].r =     img[(i*W + j)*4 + 0];
@@ -19,15 +16,13 @@ namespace ImageProcess
             }
         }
     }
-    Image::Image(const size_t W, const size_t H, Pix *input_Data): img_H(H), img_W(W) {
+    Image::Image(const size_t W, const size_t H, const Pix *input_Data): img_H(H), img_W(W), data(new Pix[H*W]) {
         using std::memcpy;
         if (input_Data==NULL) throw std::runtime_error("received NULL pointer");
-        this->data = new Pix[img_H*img_W];
         memcpy(this->data, input_Data, img_H*img_W*sizeof(this->data[0]));
     }
-    Image::Image(const Image &copy): img_H(copy.img_H), img_W(copy.img_W) {
+    Image::Image(const Image &copy): img_H(copy.img_H), img_W(copy.img_W), data(new Pix[copy.img_H*copy.img_W]) {
         using std::memcpy;
-        this->data = new Pix[img_H*img_W];
         memcpy(this->data, copy.data, img_H*img_W*sizeof(this->data[0]));
     }
     uint8_t* Image::output(void) { //dynamic alloc
