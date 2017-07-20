@@ -1,5 +1,8 @@
 #ifndef __INCLUDE_UTILS_CLASS
 #define __INCLUDE_UTILS_CLASS
+//#include <stdexcept>
+//#include <functional>
+//#include <cmath>
 #include "utils.h"
 #include "Scale.h"
 
@@ -7,13 +10,12 @@ namespace ImageProcess
 {
     Scale::Scale(double _scaleX, double _scaleY, int mode, const Image *img) : \
         mode(mode), sdata(img), tdata(new Image((size_t)(_scaleX*(double)img->img_W+0.5), (size_t)(_scaleY*(double)img->img_H+0.5))) {
-            if (scaleX<0||scaleY<0) throw std::runtime_error("scale ratio is negative");
+            if (_scaleX<0||_scaleY<0) throw std::runtime_error("scale ratio is negative");
             if (mode!=0 && mode!=1) throw std::runtime_error("mode is not 0/1");
             if (this->sdata==NULL) throw std::runtime_error("sdata is NULL");
             if (this->tdata==NULL) throw std::runtime_error("tdata is NULL");
             scaleX = (double)this->sdata->img_W / (double)this->tdata->img_W;
             scaleY = (double)this->sdata->img_H / (double)this->tdata->img_H;
-            using std::endl;
         }
     Pix Scale::bilinear(int x, int y) {
         double midX = x*scaleX, midY = y*scaleY;

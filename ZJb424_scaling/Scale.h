@@ -1,9 +1,10 @@
 #ifndef __INCLUDE_UTILS_HEADER
 #define __INCLUDE_UTILS_HEADER
 #include "utils.h"
-#include <iostream>
 #include <cassert>
 #include <cmath>
+#include <stdexcept>
+#include <functional>
 
 namespace ImageProcess 
 {
