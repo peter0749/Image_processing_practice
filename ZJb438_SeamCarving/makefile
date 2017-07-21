@@ -1,5 +1,5 @@
 IMAGE_PATH=../Image
-FLAG=
+FLAG= -O3 -Os
 all: main zjb438
 zjb438: zjb438.cpp
 	g++ zjb438.cpp -o zjb438 ${FLAG}
