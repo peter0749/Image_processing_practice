@@ -6,6 +6,7 @@ namespace ImageProcess
     Pix::Pix(uint8_t r, uint8_t g, uint8_t b, uint8_t alpha) : r(r), g(g), b(b), alpha(alpha) {}
     Pix::Pix(const Pix &copy) : r(copy.r), g(copy.g), b(copy.b), alpha(copy.alpha) {}
     Pix::Pix(const PixDouble &copy) : r((uint8_t)copy.r), g((uint8_t)copy.g), b((uint8_t)copy.b), alpha((uint8_t)copy.alpha) {}
+    Pix::Pix(const PixDouble &copy, int round) : r((uint8_t)(copy.r+0.5)), g((uint8_t)(copy.g+0.5)), b((uint8_t)(copy.b+0.5)), alpha((uint8_t)(copy.alpha+0.5)) {}
     Pix::Pix() {}
 
     // only if you using this namespace, the operator overloadings are work.

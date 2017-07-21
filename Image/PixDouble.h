@@ -15,6 +15,7 @@ namespace ImageProcess
     };
     // only if you using this namespace, the operator overloadings are work.
     const PixDouble operator+(const PixDouble &left, const PixDouble &right);
+    const PixDouble operator+(const PixDouble &left, double right);
     const PixDouble operator-(const PixDouble &left, const PixDouble &right);
     const PixDouble operator*(const PixDouble &left, double right);
     const PixDouble operator/(const PixDouble &left, double right);

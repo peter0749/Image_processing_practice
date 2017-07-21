@@ -18,15 +18,22 @@ namespace ImageProcess
         PixDouble ret(r,g,b,a);
         return ret;
     }
+    const PixDouble operator+(const PixDouble &left, double right) {
+        using std::fabs;
+        double r = fabs(left.r+right);
+        double g = fabs(left.g+right);
+        double b = fabs(left.b+right);
+        double a = fabs(left.alpha+right);
+        PixDouble ret(r,g,b,a);
+        return ret;
+    }
     const PixDouble operator-(const PixDouble &left, const PixDouble &right) {
-        double r = left.r-right.r;
-        double g = left.g-right.g;
-        double b = left.b-right.b;
-        double a = left.alpha-right.alpha;
-        PixDouble ret(r<0.0?0.0:r, \
-                      g<0.0?0.0:g, \
-                      b<0.0?0.0:b, \
-                      a<0.0?0.0:a  );
+        using std::fabs;
+        double r = fabs(left.r-right.r);
+        double g = fabs(left.g-right.g);
+        double b = fabs(left.b-right.b);
+        double a = fabs(left.alpha-right.alpha);
+        PixDouble ret(r, g, b, a);
         return ret;
     }
     const PixDouble operator*(const PixDouble &left, double right) {
