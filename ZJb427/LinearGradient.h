@@ -1,6 +1,6 @@
 #ifndef __INCLUDE_LINEAR_GRADIENT_HEADER
 #define __INCLUDE_LINEAR_GRADIENT_HEADER
-#include "../utils/utils.h"
+#include "utils.h"
 namespace ImageProcess
 {
     class LinearGradient {

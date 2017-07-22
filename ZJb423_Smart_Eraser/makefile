@@ -1,17 +1,15 @@
-IMAGE_PATH=../Image
+LIB_PATH=../lib
+UTILS_PATH=../utils
+FLAG=
 all: main
-main: main.cpp Image.o Eraser.o Eraser.h utils.h utils.o Pix.o PixDouble.o
-	g++ main.cpp utils.o Image.o Eraser.o Pix.o PixDouble.o -o main
-Image.o: ${IMAGE_PATH}/Image.cpp ${IMAGE_PATH}/Image.h
-	g++ -c ${IMAGE_PATH}/Image.cpp -o Image.o
-Pix.o: ${IMAGE_PATH}/Pix.cpp ${IMAGE_PATH}/Pix.h
-	g++ -c ${IMAGE_PATH}/Pix.cpp -o Pix.o
-PixDouble.o: ${IMAGE_PATH}/PixDouble.cpp ${IMAGE_PATH}/PixDouble.h
-	g++ -c ${IMAGE_PATH}/PixDouble.cpp -o PixDouble.o
-Eraser.o: Eraser.h Eraser.cpp
-	g++ -c Eraser.cpp -o Eraser.o
-utils.o: utils.h utils.cpp
-	g++ -c utils.cpp -o utils.o
+main: main.cpp Eraser.o Eraser.h ${UTILS_PATH}/utils.h libImageProcess.so.1.0.0
+	g++ main.cpp Eraser.o -I${UTILS_PATH} -L${LIB_PATH} -lImageProcess -o main ${FLAG}
+libImageProcess.so.1.0.0:
+	ln -s ${LIB_PATH}/libImageProcess.so.1.0.0 libImageProcess.so.1.0.0
+Eraser.o: Eraser.cpp Eraser.h
+	g++ -c Eraser.cpp -I${UTILS_PATH} -o Eraser.o ${FLAG}
 clean:
+	rm -f libImageProcess*
 	rm -f *.o main
+	rm -rf *.dSYM
 

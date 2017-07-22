@@ -1,6 +1,6 @@
 #ifndef __ERASER_HEADER_REQUIRE_ONCE
 #define __ERASER_HEADER_REQUIRE_ONCE
-#include "../Image/Image.h"
+#include "utils.h"
 #include <cmath>
 #include <queue>
 #include <functional>

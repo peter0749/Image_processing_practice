@@ -1,8 +1,5 @@
 #ifndef __INCLUDE_UTILS_CLASS
 #define __INCLUDE_UTILS_CLASS
-//#include <stdexcept>
-//#include <functional>
-//#include <cmath>
 #include "utils.h"
 #include "Scale.h"
 
