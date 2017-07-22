@@ -1,24 +1,20 @@
 CC = g++
 UTILS_DIR = ../utils
 IMAGE_DIR = ../Image
+IMG_LIB = ../lib
 
-all: main zjb427 effect
-main: main.cpp ${UTILS_DIR}/utils.h utils.o ${IMAGE_DIR}/Image.h Image.o ${IMAGE_DIR}/Pix.h Pix.o ${IMAGE_DIR}/PixDouble.h PixDouble.o LinearGradient.o LinearGradient.h
-	g++ main.cpp Pix.o PixDouble.o Image.o utils.o LinearGradient.o -o main
-effect: effect.cpp ${UTILS_DIR}/utils.h utils.o ${IMAGE_DIR}/Image.h Image.o ${IMAGE_DIR}/Pix.h Pix.o ${IMAGE_DIR}/PixDouble.h PixDouble.o LinearGradient.o LinearGradient.h
-	g++ effect.cpp Pix.o PixDouble.o Image.o utils.o LinearGradient.o -o effect
-utils.o: ${UTILS_DIR}/utils.h ${UTILS_DIR}/utils.cpp
-	g++ -c ${UTILS_DIR}/utils.cpp -o utils.o
-Pix.o: ${IMAGE_DIR}/Pix.h ${IMAGE_DIR}/Pix.cpp
-	g++ -c ${IMAGE_DIR}/Pix.cpp -o Pix.o
-PixDouble.o: ${IMAGE_DIR}/PixDouble.h ${IMAGE_DIR}/PixDouble.cpp
-	g++ -c ${IMAGE_DIR}/PixDouble.cpp -o PixDouble.o
-Image.o: ${IMAGE_DIR}/Image.h ${IMAGE_DIR}/Image.cpp
-	g++ -c ${IMAGE_DIR}/Image.cpp -o Image.o
+all: main zjb427 effect dep
+dep:
+	ln -s ${IMG_LIB}/libImageProcess.so.1.0.0 libImageProcess.so.1.0.0
+main: main.cpp ${UTILS_DIR}/utils.h ${IMAGE_DIR}/Image.h ${IMAGE_DIR}/Pix.h ${IMAGE_DIR}/PixDouble.h LinearGradient.h LinearGradient.o
+	g++ main.cpp LinearGradient.o -L${IMG_LIB} -lImageProcess -o main
+effect: effect.cpp ${UTILS_DIR}/utils.h ${IMAGE_DIR}/Image.h ${IMAGE_DIR}/Pix.h ${IMAGE_DIR}/PixDouble.h LinearGradient.h LinearGradient.o
+	g++ effect.cpp LinearGradient.o -L${IMG_LIB} -lImageProcess -o effect
 LinearGradient.o: LinearGradient.cpp LinearGradient.h
 	g++ -c LinearGradient.cpp -o LinearGradient.o
 zjb427: zjb427.cpp
 	g++ zjb427.cpp -o zjb427
 clean:
+	rm -f libImageProcess*
 	rm -f main *.o zjb427 effect
 
