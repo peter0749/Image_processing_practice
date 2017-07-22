@@ -2,7 +2,7 @@ CC = g++
 UTILS_DIR = ../utils
 IMAGE_DIR = ../Image
 
-all: main
+all: main zjb427
 main: main.cpp ${UTILS_DIR}/utils.h utils.o ${IMAGE_DIR}/Image.h Image.o ${IMAGE_DIR}/Pix.h Pix.o ${IMAGE_DIR}/PixDouble.h PixDouble.o LinearGradient.o LinearGradient.h
 	g++ main.cpp Pix.o PixDouble.o Image.o utils.o LinearGradient.o -o main
 utils.o: ${UTILS_DIR}/utils.h ${UTILS_DIR}/utils.cpp
@@ -15,6 +15,8 @@ Image.o: ${IMAGE_DIR}/Image.h ${IMAGE_DIR}/Image.cpp
 	g++ -c ${IMAGE_DIR}/Image.cpp -o Image.o
 LinearGradient.o: LinearGradient.cpp LinearGradient.h
 	g++ -c LinearGradient.cpp -o LinearGradient.o
+zjb427: zjb427.cpp
+	g++ zjb427.cpp -o zjb427
 clean:
-	rm -f main *.o
+	rm -f main *.o zjb427
 
