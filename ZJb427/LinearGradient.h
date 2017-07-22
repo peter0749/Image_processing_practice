@@ -6,14 +6,13 @@ namespace ImageProcess
     class LinearGradient {
         private:
             Image out;
-            Pix inner, outer;
-            int mode;
+            const Pix inner, outer;
+            const int mode;
             void linear(); // mode 0
             void radial(); // mode 1
             void alphaRadial(); // not implement yet
         public:
-            LinearGradient(const Image &_input, const Pix &_inner,\
-                           const Pix   &_outer, int mode);
+            LinearGradient(const Image &_input);
             LinearGradient(const size_t W, const size_t H, const Pix &_inner,\
                            const Pix   &_outer, int mode);
             Image* run();

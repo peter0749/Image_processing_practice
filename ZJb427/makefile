@@ -2,9 +2,11 @@ CC = g++
 UTILS_DIR = ../utils
 IMAGE_DIR = ../Image
 
-all: main zjb427
+all: main zjb427 effect
 main: main.cpp ${UTILS_DIR}/utils.h utils.o ${IMAGE_DIR}/Image.h Image.o ${IMAGE_DIR}/Pix.h Pix.o ${IMAGE_DIR}/PixDouble.h PixDouble.o LinearGradient.o LinearGradient.h
 	g++ main.cpp Pix.o PixDouble.o Image.o utils.o LinearGradient.o -o main
+effect: effect.cpp ${UTILS_DIR}/utils.h utils.o ${IMAGE_DIR}/Image.h Image.o ${IMAGE_DIR}/Pix.h Pix.o ${IMAGE_DIR}/PixDouble.h PixDouble.o LinearGradient.o LinearGradient.h
+	g++ effect.cpp Pix.o PixDouble.o Image.o utils.o LinearGradient.o -o effect
 utils.o: ${UTILS_DIR}/utils.h ${UTILS_DIR}/utils.cpp
 	g++ -c ${UTILS_DIR}/utils.cpp -o utils.o
 Pix.o: ${IMAGE_DIR}/Pix.h ${IMAGE_DIR}/Pix.cpp
@@ -18,5 +20,5 @@ LinearGradient.o: LinearGradient.cpp LinearGradient.h
 zjb427: zjb427.cpp
 	g++ zjb427.cpp -o zjb427
 clean:
-	rm -f main *.o zjb427
+	rm -f main *.o zjb427 effect
 
