@@ -1,9 +1,7 @@
 LIB_PATH=../lib
 UTILS_PATH=../utils
 FLAG= -Ofast
-all: main zjb445
-zjb445: zjb445.cpp
-	g++ zjb445.cpp -o zjb445 ${FLAG}
+all: main
 main: main.cpp TextureTransfer.o TextureTransfer.h ${UTILS_PATH}/utils.h libImageProcess.so.1.0.0
 	g++ main.cpp TextureTransfer.o -I${UTILS_PATH} -L${LIB_PATH} -lImageProcess -o main ${FLAG}
 libImageProcess.so.1.0.0:

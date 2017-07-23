@@ -95,14 +95,14 @@ namespace ImageProcess
             dp1 = new int[dp1Size];
             fill(dp1, dp1+dp1Size, 1e9);
             for (int i=0; i<overlap; ++i) {
-                Pix rp1(result.getPixel(sx, sy+i));
+                Pix rp1(temp->getPixel(0, i));
                 Pix tp1(texture.getPixel(x, y+i));
                 dp1[i+1] = diff(rp1, tp1);
             }
             LAZY1( Width, 
                     for (int k=-1; k<=1; ++k)
                         minval=min(minval, dp1[of(i-1,j+k)]);
-                    Pix r(result.getPixel(sx+i, sy+j-1));
+                    Pix r(temp->getPixel(i, j-1));
                     Pix t(texture.getPixel(x+i, y+j-1));
                     dp1[of(i,j)] = minval + diff(r,t);
                  )
@@ -111,7 +111,7 @@ namespace ImageProcess
                       mindp= i;
                   }
                   for (int i=Width-1; i>=1; --i) {
-                      Pix r(result.getPixel(sx+i, sy+mindp-1));
+                      Pix r(temp->getPixel(i, mindp-1));
                       Pix t(texture.getPixel(x+i, y+mindp-1));
                       int val = diff(r,t);
                       for (int j=-1; j<=1; ++j) {
@@ -136,14 +136,14 @@ namespace ImageProcess
             dp2 = new int[dp2Size];
             fill(dp2, dp2+dp2Size, 1e9);
             for (int i=0; i<overlap; ++i) {
-                Pix rp2(result.getPixel(sx+i, sy));
+                Pix rp2(temp->getPixel(i, 0));
                 Pix tp2(texture.getPixel(x+i, y));
                 dp2[i+1] = diff(rp2, tp2);
             }
             LAZY1( Height,
                     for (int k=-1; k<=1; ++k) 
                         minval=min(minval, dp2[of(i-1,j+k)]);
-                    Pix r(result.getPixel(sx+j-1, sy+i));
+                    Pix r(temp->getPixel(j-1, i));
                     Pix t(texture.getPixel(x+j-1,  y+i));
                     dp2[of(i,j)] = minval + diff(r,t);
                  )
@@ -152,7 +152,7 @@ namespace ImageProcess
                       mindp= i;
                   }
                   for (int i=Height-1; i>=1; --i) {
-                      Pix r(result.getPixel(sx+mindp-1, sy+i));
+                      Pix r(temp->getPixel(mindp-1, i));
                       Pix t(texture.getPixel(x+mindp-1, y+i));
                       int val = diff(r,t);
                       for (int j=-1; j<=1; ++j) {
