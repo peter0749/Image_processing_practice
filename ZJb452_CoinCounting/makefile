@@ -15,7 +15,7 @@ Threshold.o: ${THRES_PATH}/Threshold.cpp ${THRES_PATH}/Threshold.h
 Gradient.o: ${GRADIENT_PATH}/Gradient.h ${GRADIENT_PATH}/Gradient.cpp
 	g++ -c ${GRADIENT_PATH}/Gradient.cpp -I${UTILS_PATH} -I${GRADIENT_PATH} -o Gradient.o ${FLAG}
 Hough.o: Hough.cpp Hough.h
-	g++ -c Hough.cpp -o Hough.o ${FLAG}
+	g++ -c Hough.cpp -o Hough.o -I${UTILS_PATH} -I${GRADIENT_PATH} -I${THRES_PATH} ${FLAG}
 clean:
 	rm -f libImageProcess*
 	rm -f *.o main zjb460 zjb458

@@ -7,17 +7,17 @@ namespace ImageProcess
 {
     class HoughCircle {
         private:
-            Image target;
+            Image *target; // output, do not delete
             int *accumulator;
             double radius;
             double eps;
             int    thres;
             int    counter;
-            void hough(void);
-            void markCircle(void); // also count circles
         public:
             HoughCircle(const Image &ref, double r, double e, int th); // : target(W,W), radius(r) , accumulator(...) ...
+            ~HoughCircle();
             Image* out(void);   // points circles position
+            Image* HoughTempResult(void); 
             int    count(void); // output # of circles
     };
 };
