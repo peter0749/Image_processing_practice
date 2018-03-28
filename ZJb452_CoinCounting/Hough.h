@@ -18,7 +18,7 @@ namespace ImageProcess
             ~HoughCircle();
             Image* out(void);   // points circles position
             Image* HoughTempResult(void); 
-            int    count(void); // output # of circles
+            int    count(int); // output # of circles
     };
 };
 #endif

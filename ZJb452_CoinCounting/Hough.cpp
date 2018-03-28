@@ -1,7 +1,9 @@
 #ifndef __INCLUDE_HOUGH_CPP
 #define __INCLUDE_HOUGH_CPP
-#define PI 3.141592653589793238462643383279
+// #define PI 3.141592653589793238462643383279
+#define PI std::acos(-1)
 #include <cmath>
+#include <queue>
 #include "Hough.h"
 namespace ImageProcess
 {
@@ -51,12 +53,8 @@ namespace ImageProcess
                 }
             }
         }
-        for (int i=0; i<target->img_H; ++i) {
-            for (int j=0; j<target->img_W; ++j) {
-                if (accumulator[of(i,j)]<thres)  // 小於 thres 的點數，不是圓心
-                    accumulator[of(i,j)] = 0;
-            }
-        }
+        for (int i=0; i<target->img_H*target->img_W; ++i) 
+            accumulator[i] = (accumulator[i]<thres)?0:1;
     }
     HoughCircle::~HoughCircle() {
         delete[] accumulator;
@@ -80,8 +78,43 @@ namespace ImageProcess
         }
         return output;
     }
-    int HoughCircle::count(void) {
-        // pass
+    int HoughCircle::count(int min_component_size=16) {
+        using std::queue;
+        std::queue<int> que;
+        int lab_cnt = 0;
+        int del_lab = 0;
+        int *labs = new int[target->img_W*target->img_H];
+        memset(labs, 0x00, sizeof(labs[0])*target->img_W*target->img_H);
+        const int dirs[4][2] = {
+            {-1, 0},
+            { 0, 1},
+            { 1, 0},
+            { 0,-1}
+        };
+        for (int i=0; i<target->img_H; ++i) {
+            for (int j=0; j<target->img_W; ++j) {
+                if (accumulator[of(i,j)]>0 && labs[of(i,j)]==0) { // has component and not labeled yet
+                    ++lab_cnt;
+                    int component_size = 1;
+                    que.push(of(i,j));
+                    labs[of(i,j)] = lab_cnt;
+                    while (!que.empty()) {
+                        int top=que.front(); que.pop();
+                        for (int d=0; d<4; ++d) {
+                            int idx = top+of(dirs[d][0], dirs[d][1]);
+                            if (accumulator[idx]>0 && labs[idx]==0) { // not labeled
+                                labs[idx] = lab_cnt;
+                                que.push(idx);
+                                ++component_size;
+                            }
+                        }
+                    }
+                    if (component_size<min_component_size) ++del_lab;
+                }
+            }
+        }
+        delete[] labs;
+        return lab_cnt-del_lab;
     }
 };
 #endif
