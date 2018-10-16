@@ -1,8 +1,8 @@
 IMAGE_PATH = ../Image
 UTILS_PATH = ../utils
 all: libImageProcess.so.1.0.0
-libImageProcess.so.1.0.0: utils.o Image.o Pix.o PixDouble.o
-	g++ -std=c++11 -shared -o libImageProcess.so.1.0.0 utils.o Image.o Pix.o PixDouble.o
+libImageProcess.so.1.0.0: utils.o Image.o Pix.o PixDouble.o loadbmp.o
+	g++ -std=c++11 -shared -o libImageProcess.so.1.0.0 utils.o Image.o Pix.o PixDouble.o loadbmp.o
 	rm -f *.o
 	ln -s libImageProcess.so.1.0.0 libImageProcess.so.1
 	ln -s libImageProcess.so.1 libImageProcess.so
@@ -14,6 +14,8 @@ PixDouble.o: ${IMAGE_PATH}/PixDouble.cpp ${IMAGE_PATH}/PixDouble.h
 	g++ -std=c++11 -c -fPIC ${IMAGE_PATH}/PixDouble.cpp -o PixDouble.o
 Image.o: ${IMAGE_PATH}/Image.cpp ${IMAGE_PATH}/Image.h
 	g++ -std=c++11 -c -fPIC ${IMAGE_PATH}/Image.cpp -o Image.o
+loadbmp.o: ${IMAGE_PATH}/loadbmp.c ${IMAGE_PATH}/loadbmp.h
+	g++ -std=c++11 -c -fPIC ${IMAGE_PATH}/loadbmp.c -o loadbmp.o
 clean:
 	rm -f *.o
 	rm -f libImageProcess.so*

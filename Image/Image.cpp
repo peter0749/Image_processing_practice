@@ -4,7 +4,42 @@
 
 namespace ImageProcess 
 {
-
+    Image::Image(const char *bmpfile_path) { 
+        unsigned char *buffer=NULL;
+        unsigned int width=0, height=0;
+        unsigned int filesize = readbmp(bmpfile_path, &width, &height, &buffer);
+        if (filesize<0) exit(1);
+        this->img_H = height;
+        this->img_W = width;
+        this->data = new Pix[height*width];
+        for (int i=0; i<height; ++i) {
+            for (int j=0; j<width; ++j) {
+                this->data[i*width + j].r = buffer[(i*width + j)*3 + 0];
+                this->data[i*width + j].g = buffer[(i*width + j)*3 + 1];
+                this->data[i*width + j].b = buffer[(i*width + j)*3 + 2];
+                this->data[i*width + j].alpha = 255;
+            }
+        }
+        if (buffer!=NULL) free(buffer);
+    }
+    void Image::writebmp(const char *bmpfile_path) {
+        unsigned int img_size = this->img_H*this->img_W*3;
+        unsigned char *buffer = NULL;
+        buffer = (unsigned char*)malloc(sizeof(unsigned char)*img_size);
+        if (buffer==NULL) exit(2);
+        
+        for (int i=0; i<this->img_H; ++i) {
+            for (int j=0; j<this->img_W; ++j) {
+                buffer[(i*this->img_W + j)*3 + 0] = this->data[i*this->img_W + j].r;
+                buffer[(i*this->img_W + j)*3 + 1] = this->data[i*this->img_W + j].g;
+                buffer[(i*this->img_W + j)*3 + 2] = this->data[i*this->img_W + j].b;
+            }
+        }
+        
+        ::writebmp(bmpfile_path, this->img_W, this->img_H, buffer);
+        
+        if (buffer!=NULL) free(buffer);
+    }
     Image::Image(const size_t W, const size_t H): img_H(H), img_W(W), data(new Pix[H*W]) { }
     Image::Image(const size_t W, const size_t H, const uint8_t *img): img_H(H), img_W(W), data(new Pix[H*W]) {
         for (int i=0; i<H; ++i) {
