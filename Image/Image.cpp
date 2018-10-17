@@ -7,17 +7,22 @@ namespace ImageProcess
     Image::Image(const char *bmpfile_path) { 
         unsigned char *buffer=NULL;
         unsigned int width=0, height=0;
-        unsigned int filesize = readbmp(bmpfile_path, &width, &height, &buffer);
-        if (filesize<0) exit(1);
+        int colored = readbmp(bmpfile_path, &width, &height, &buffer);
+        int idx;
         this->img_H = height;
         this->img_W = width;
         this->data = new Pix[height*width];
         for (int i=0; i<height; ++i) {
             for (int j=0; j<width; ++j) {
-                this->data[i*width + j].r = buffer[(i*width + j)*3 + 0];
-                this->data[i*width + j].g = buffer[(i*width + j)*3 + 1];
-                this->data[i*width + j].b = buffer[(i*width + j)*3 + 2];
-                this->data[i*width + j].alpha = 255;
+                idx = i*width + j;
+                if (colored) {
+                    this->data[idx].r = buffer[idx*3 + 0];
+                    this->data[idx].g = buffer[idx*3 + 1];
+                    this->data[idx].b = buffer[idx*3 + 2];
+                } else {
+                    this->data[idx].r = this->data[idx].g = this->data[idx].b = buffer[idx];
+                }
+                this->data[idx].alpha = 255;
             }
         }
         if (buffer!=NULL) free(buffer);
